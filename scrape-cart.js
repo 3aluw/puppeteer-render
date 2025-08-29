@@ -17,6 +17,16 @@ export async function scrapeCart(url) {
   
   })
   const page = await browser.newPage()
+  // Block heavy resources
+  await page.setRequestInterception(true);
+  page.on("request", (req) => {
+    const resourceType = req.resourceType();
+    if (["image", "stylesheet", "font", "media"].includes(resourceType)) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
 
   // Spoof mobile
   await page.setUserAgent(
