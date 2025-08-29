@@ -33,7 +33,7 @@ export async function scrapeCart(url) {
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0 Safari/537.36'
   )
   console.log(0);
-  await page.goto(url, { waitUntil: 'networkidle1', timeout: 60000 })
+  await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
   console.log(1);
   // Wait until cart content is there
   await page.waitForSelector('.csl-cart-list')
