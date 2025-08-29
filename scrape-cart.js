@@ -34,11 +34,11 @@ export async function scrapeCart(url) {
   )
   await page.setViewport({ width: 390, height: 844, isMobile: true })
 
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 })
-
+  await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
+console.log(1);
   // Wait until cart content is there
   await page.waitForSelector('.csl-cart-list')
-
+console.log(2);
   const products = await page.evaluate(() => {
     return [...document.querySelectorAll('.csl-cart-item')].map(item => {
       const title = item.querySelector('.bsc-cart-item-goods-title__content')?.innerText.trim() || null
