@@ -1,7 +1,9 @@
 import express from "express";
 import { getProductsInfo } from "./scrapeLogic.js";
-const app = express();
+import dotenv from 'dotenv';
+dotenv.config();
 
+const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.get("/", (req, res) => {
