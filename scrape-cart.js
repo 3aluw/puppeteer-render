@@ -24,7 +24,7 @@ export async function scrapeCart(url) {
   )
   await page.setViewport({ width: 390, height: 844, isMobile: true })
 
-  await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 })
 
   // Wait until cart content is there
   await page.waitForSelector('.csl-cart-list')
