@@ -57,7 +57,9 @@ export const getLink = async (sharejumpUrl) => {
     console.log('🆔 shareId:', cartInfo.shareId);
     console.log('🌎 localcountry:', cartInfo.country);
 
-    const cartUrl = `https://m.shein.com/cart/share/landing?group_id=${cartInfo.shareId}&local_country=${cartInfo.country}`;
+    
+    const cartUrl = `https://m.shein.com/ar-en/cart/share/landing?countryCode=SA&${cartInfo.shareId}&local_country=${cartInfo.country}`;
+
     return cartUrl
 }
 /* const link = await getLink("https://api-shein.shein.com/h5/sharejump/appjump?link=ljho68mULQJ_b&localcountry=DZ")

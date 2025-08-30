@@ -48,7 +48,7 @@ const cartData = await response.json();
 
 // Usage
 /* ;(async () => {
-  const url = 'https://m.shein.com/cart/share/landing?group_id=500990230&local_country=DZ'
+  const url = 'https://m.shein.com/ar-en/cart/share/landing?countryCode=SA&group_id=500990230&local_country=DZ'
   await scrapeCart(url)
 })()
- */
+  */
