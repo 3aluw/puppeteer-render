@@ -17,43 +17,33 @@ export async function scrapeCart(url) {
 
   })
   const page = await browser.newPage()
-/*   // Block heavy resources
-  await page.setRequestInterception(true);
-  page.on("request", (req) => {
-    const resourceType = req.resourceType();
-    if (["image", "stylesheet", "font", "media"].includes(resourceType)) {
-      req.abort();
-    } else {
-      req.continue();
-    }
-  }); */
+    // Block heavy resources
+    await page.setRequestInterception(true);
+    page.on("request", (req) => {
+      const resourceType = req.resourceType();
+      if (["image", "stylesheet", "font", "media"].includes(resourceType)) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    }); 
 
   // Spoof mobile
   await page.setUserAgent(
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0 Safari/537.36'
   )
-  console.log(0);
-  await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
-  console.log(1);
-  // Wait until cart content is there
-  await page.waitForSelector('.csl-cart-list')
-  console.log(2);
-  const products = await page.evaluate(() => {
-    return [...document.querySelectorAll('.csl-cart-item')].map(item => {
-      const title = item.querySelector('.bsc-cart-item-goods-title__content')?.innerText.trim() || null
-      const link = item.querySelector('.bsc-cart-item-goods-title__content')?.getAttribute('href') || null
-      const image = item.querySelector('.bsc-cart-item-goods-img__content img')?.src || null
-      const price = item.querySelector('.bsc-cart-item-goods-price__sale-price')?.innerText.trim() || null
-      const attr = item.querySelector('.bsc-cart-item-goods-sale-attr__text')?.innerText.trim() || null
 
-      return { title, link, image, price, attr }
-    })
-  })
+const waitForCart = page.waitForResponse(res =>
+  res.url().includes("/bff-api/order/cart/share/landing")
+);
 
-  console.log('🛒 Extracted products:', products)
-  await browser.close()
-  return products
+  await page.goto(url,{ waitUntil: "domcontentloaded" })
+const response = await waitForCart;  
+const cartData = await response.json(); 
+  console.log(cartData);
 
+  await browser.close();
+  return cartData;
 }
 
 // Usage
